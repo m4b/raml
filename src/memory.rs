@@ -99,27 +99,6 @@ macro_rules! count {
 }
 
 #[macro_export]
-macro_rules! caml_param {
-
-    (@step $idx:expr, $caml_roots:ident,) => {
-        $caml_roots.ntables = $idx;
-    };
-
-    (@step $idx:expr, $caml_roots:ident, $param:ident, $($tail:ident,)*) => {
-        $caml_roots.tables[$idx] = &mut $param;
-        caml_param!(@step $idx + 1usize, $caml_roots, $($tail,)*);
-    };
-
-    ($($n:ident),*) => {
-        let mut caml_roots: $crate::memory::CamlRootsBlock = ::std::default::Default::default();
-        caml_roots.next = $crate::memory::caml_local_roots;
-        $crate::memory::caml_local_roots = (&mut caml_roots) as *mut $crate::memory::CamlRootsBlock;
-        caml_roots.nitems = 1; // this is = N when CAMLxparamN is used
-        caml_param!(@step 0usize, caml_roots, $($n,)*);
-    }
-}
-
-#[macro_export]
 macro_rules! caml_ffi {
 //, $($n:ident),*
 
@@ -140,6 +119,29 @@ macro_rules! caml_ffi {
     }
 }
 
+#[macro_export]
+macro_rules! caml_param {
+
+    (@step $idx:expr, $caml_roots:ident,) => {
+        $caml_roots.ntables = $idx;
+    };
+
+    (@step $idx:expr, $caml_roots:ident, $param:ident, $($tail:ident,)*) => {
+        $caml_roots.tables[$idx] = &mut $param;
+        caml_param!(@step $idx + 1usize, $caml_roots, $($tail,)*);
+    };
+
+//    () => {};
+
+    ($($n:ident),*) => {
+        let mut caml_roots: $crate::memory::CamlRootsBlock = ::std::default::Default::default();
+        caml_roots.next = $crate::memory::caml_local_roots;
+        $crate::memory::caml_local_roots = (&mut caml_roots) as *mut $crate::memory::CamlRootsBlock;
+        caml_roots.nitems = 1; // this is = N when CAMLxparamN is used
+        caml_param!(@step 0usize, caml_roots, $($n,)*);
+    }
+}
+
 /// Initializes and registers the given identifier(s) as a local value with the OCaml runtime.
 /// C code:
 /// ```c
@@ -149,6 +151,7 @@ macro_rules! caml_ffi {
 /// ```
 #[macro_export]
 macro_rules! caml_local {
+//    () => {};
     ($($local:ident),*) => {
         $(let mut $local = $crate::mlvalues::UNIT;)*
         caml_param!($($local),*);
@@ -157,6 +160,13 @@ macro_rules! caml_local {
 
 #[macro_export]
 macro_rules! caml_body {
+
+    (||, <$($local:ident),*>, $code:block) => {
+        let caml_frame = $crate::memory::caml_local_roots;
+        caml_local!($($local),*);
+        $code;
+        $crate::memory::caml_local_roots = caml_frame;
+    };
 
     (|$($param:ident),*|, @code $code:block) => {
         let caml_frame = $crate::memory::caml_local_roots;
