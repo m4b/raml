@@ -7,8 +7,6 @@
 //! The benefit of this approach is that it removes any bridging C code, and allows in essence, a direct interface between Rust and OCaml.
 //!
 //! ```rust
-//! #[macro_use]
-//! extern crate raml;
 //! // these are two functions that OCaml code can access via `external val` declarations
 //!
 //! caml!(ml_send_int, |v, v2|, <l>, {
@@ -29,29 +27,7 @@
 //! });
 //! ```
 
-#[macro_use]
 pub mod mlvalues;
-#[macro_use]
 pub mod memory;
-#[macro_use]
 pub mod alloc;
-#[macro_use]
 pub mod callback;
-
-#[cfg(test)]
-mod tests {
-
-    #[macro_use]
-    use super::mlvalues::*;
-
-    #[macro_use]
-    use super::memory::{CamlRootsBlock, caml_local_roots};
-
-    #[test]
-    fn test_memory() {
-        let mut caml_int = 7471857119 as usize; // if this is not cast, then it's a u32 and conversion will fail
-        //param!(caml_int);
-        let x = int_val!(caml_int);
-        assert_eq!(x, 0xdeadbeef);
-    }
-}

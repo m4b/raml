@@ -212,17 +212,3 @@ macro_rules! caml {
     };
 
 }
-
-#[cfg(test)]
-mod test {
-
-    use super::super::mlvalues::Value;
-
-    #[cfg(test)]
-    fn test_paramx() {
-        let v: Value = 0x0;
-        //        caml_param!(v);
-        assert!(true);
-    }
-
-}
