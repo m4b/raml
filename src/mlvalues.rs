@@ -1,3 +1,6 @@
+//! Contains OCaml types and conversion functions from runtime representations.
+//!
+
 #[allow(non_camel_case_types)]
 pub type Value = usize;
 pub type Uintnat = usize;
@@ -40,21 +43,24 @@ macro_rules! val_long {
 }
 
 #[macro_export]
-///Long_val(x)     ((x) >> 1)
+/// `Long_val(x)     ((x) >> 1)`
 macro_rules! long_val {
 ($x:ident) => ($x as usize >> 1);
 ($x:expr) => ($x as usize >> 1);
 }
 
 #[macro_export]
-///Val_int(x) Val_long(x)
+/// Converts a machine `usize` into an OCaml `int`
+///
+/// `Val_int(x) Val_long(x)`
 macro_rules! val_int {
 ($x:expr) => ( val_long!($x) );
 ($x:ident) => ( val_long!($x) );
 }
 
 #[macro_export]
-///Int_val(x) ((int) Long_val(x))
+/// Converts an OCaml `int` into a `usize`
+/// `Int_val(x) ((int) Long_val(x))`
 macro_rules! int_val {
 ($x:ident) => (long_val!($x));
 ($x:expr) => (long_val!($x));
@@ -64,12 +70,14 @@ macro_rules! int_val {
 // #define Min_long (-((intnat)1 << (8 * sizeof(value) - 2)))
 
 #[macro_export]
+/// Extracts from the `$block` an OCaml value at the `$ith`-field
 macro_rules! field {
-    ($x:ident, $i:expr) => (
-    unsafe { (x as *mut Value).offset(i)}
+    ($block:ident, $i:expr) => (
+    unsafe { (block as *mut Value).offset(i)}
     );
 }
 
+/// The OCaml `()` (`unit`) value - rien.
 pub const UNIT: Value = val_int!(0);
 
 /*
@@ -89,6 +97,7 @@ pub const Tag_cons: ::std::os::raw::c_uchar = 0;
 */
 
 // Strings
+/// The OCaml GC tag for a `string`
 pub const STRING_TAG: u8 = 252;
 
 /// Pointer to the first byte
@@ -100,6 +109,7 @@ macro_rules! bp_val {
 }
 
 #[macro_export]
+/// Extracts a machine `ptr` to the bytes making up an OCaml `string`
 macro_rules! string_val {
   ($v:ident) => {
       bp_val!($v)

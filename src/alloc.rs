@@ -1,3 +1,5 @@
+//! External definitions for allocating values in the OCaml runtime
+
 use mlvalues::{Mlsize_t, Value, Tag_t};
 
 extern "C" {

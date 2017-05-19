@@ -1,6 +1,6 @@
-/// Callbacks from C to OCaml
-/// This is also where you initialize the OCaml runtime system via `caml_startup` or `caml_main`
-///
+//! Callbacks from C to OCaml
+//! This is also where you initialize the OCaml runtime system via `caml_startup` or `caml_main`
+//!
 
 use mlvalues::Value;
 
