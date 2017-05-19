@@ -24,3 +24,18 @@ caml!(ml_beef, |parameter|, <local>, {
 The macro takes care of _automatically_ declaring `CAMLparam` et. al, as well as `CAMLlocal` and `CAMLreturn`.
 
 If you need more fine grained control, `caml_body!` and others are available.
+
+### Documentation
+
+https://docs.rs/raml/
+
+### Usage
+
+raml should work with a recent `rustc` (I test on 1.16), and _does not require nightly_.
+
+Add to your `Cargo.toml`
+
+```toml
+[dependencies]
+raml = "0.1.0"
+```
