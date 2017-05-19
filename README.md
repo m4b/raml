@@ -1,4 +1,4 @@
-![goats are actually the best animal ever invented](https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg)
+![goats are actually the best animal ever invented](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hausziege_04.jpg/480px-Hausziege_04.jpg)
 
 # Raml - Intelligent OCaml FFI in Rust
 
