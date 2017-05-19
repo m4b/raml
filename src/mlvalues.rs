@@ -30,9 +30,7 @@ For 64-bit architectures:
 bits  63    10 9     8 7   0
 ```
 */
-pub struct Header {
-    
-}
+pub struct Header {}
 
 #[macro_export]
 /// (((intnat)(x) << 1) + 1)
@@ -110,5 +108,5 @@ macro_rules! string_val {
 
 extern "C" {
     /// Returns size of the string in `value` in bytes
-    pub fn caml_string_length (value: Value) -> Mlsize_t;
+    pub fn caml_string_length(value: Value) -> Mlsize_t;
 }

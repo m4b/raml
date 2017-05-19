@@ -32,7 +32,7 @@ use std::default::Default;
 use std::ptr;
 
 //#[macro_use]
-use mlvalues::{Value};
+use mlvalues::Value;
 
 #[repr(C)]
 #[derive(Debug, Clone)]
@@ -88,7 +88,7 @@ macro_rules! store_field {
 /// caml_modify (&Field ((block), caml__temp_offset), caml__temp_val); \
 /// }while(0)
 /// ```
-pub unsafe fn store_field (block: *mut Value, offset: usize, value: Value) {
+pub unsafe fn store_field(block: *mut Value, offset: usize, value: Value) {
     let contents = (block.offset(offset as isize)) as *mut Value;
     caml_modify(contents, value);
 }
@@ -221,7 +221,7 @@ mod test {
     #[cfg(test)]
     fn test_paramx() {
         let v: Value = 0x0;
-//        caml_param!(v);
+        //        caml_param!(v);
         assert!(true);
     }
 

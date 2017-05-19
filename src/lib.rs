@@ -29,10 +29,14 @@
 //! });
 //! ```
 
-#[macro_use] pub mod mlvalues;
-#[macro_use] pub mod memory;
-#[macro_use] pub mod alloc;
-#[macro_use] pub mod callback;
+#[macro_use]
+pub mod mlvalues;
+#[macro_use]
+pub mod memory;
+#[macro_use]
+pub mod alloc;
+#[macro_use]
+pub mod callback;
 
 #[cfg(test)]
 mod tests {
