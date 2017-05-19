@@ -2,5 +2,11 @@
 name = "raml"
 version = "0.1.0"
 authors = ["m4b <m4b.github.io@gmail.com>"]
+readme = "README.md"
+keywords = ["ocaml", "rust", "ffi"]
+repository = "https://github.com/m4b/raml"
+license = "MIT"
+description = "Direct OCaml FFI bindings and runtime functions in Rust, without any C"
+documentation = "https://docs.rs/raml"
 
 [dependencies]
