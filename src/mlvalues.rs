@@ -13,30 +13,32 @@ pub type Color_t = Uintnat;
 #[allow(non_camel_case_types)]
 pub type Mark_t = Uintnat;
 
-/** Structure of the header:
-
-For 16-bit and 32-bit architectures:
-
-```text
-     +--------+-------+-----+
-     | wosize | color | tag |
-     +--------+-------+-----+
-bits  31    10 9     8 7   0
-```
-
-For 64-bit architectures:
-
-```text
-     +--------+-------+-----+
-     | wosize | color | tag |
-     +--------+-------+-----+
-bits  63    10 9     8 7   0
-```
-*/
+/// An OCaml heap-allocated block header. **NB**: this is currently unimplemented.
+///
+/// Structure of the header:
+///
+/// For 16-bit and 32-bit architectures:
+///
+///```text
+///      +--------+-------+-----+
+///      | wosize | color | tag |
+///      +--------+-------+-----+
+/// bits  31    10 9     8 7   0
+///```
+///
+/// For 64-bit architectures:
+///
+///```text
+///      +--------+-------+-----+
+///      | wosize | color | tag |
+///      +--------+-------+-----+
+/// bits  63    10 9     8 7   0
+///```
+///
 pub struct Header {}
 
 #[macro_export]
-/// (((intnat)(x) << 1) + 1)
+/// `(((intnat)(x) << 1) + 1)`
 macro_rules! val_long {
 ($x:expr) => ((($x as usize) << 1) + 1);
 ($x:ident) => ((($x as usize) << 1) + 1);
@@ -60,6 +62,7 @@ macro_rules! val_int {
 
 #[macro_export]
 /// Converts an OCaml `int` into a `usize`
+///
 /// `Int_val(x) ((int) Long_val(x))`
 macro_rules! int_val {
 ($x:ident) => (long_val!($x));

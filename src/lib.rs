@@ -13,6 +13,8 @@
 //! ```rust
 //! #[macro_use] extern crate raml;
 //!
+//! // linking against this rust static lib, you can access this function in OCaml via:
+//! // `external beef : int -> int = "ml_beef"`
 //! caml!(ml_beef, |parameter|, <local>, {
 //!     let i = int_val!(parameter);
 //!     let res = 0xbeef * i;
@@ -51,9 +53,29 @@
 //!     println!("got  0x{:x}, {}", x, string);
 //! });
 //!
-//! // this is only here to satisfy docs
+//! // this is only here to satisfy docs, you will likely want a staticlib, not a rust executable
 //! fn main() {}
 //! ```
+//!
+//! These will be accessible to an OCaml program via `external` declarations, e.g., for the above we could do something like:
+//!
+//! ```OCaml
+//! external send_int : int -> int = "ml_send_int"
+//! external send_two : int -> string -> unit = "ml_send_two"
+//!
+//! let f x = x land 0x0000ffff
+//!
+//! let _ =
+//!   let string = "string thing" in
+//!   let deadbeef = 0xdeadbeef in
+//!   let res = send_int 0xb1b1eb0b in
+//!   Printf.printf "send_int returned: 0x%x\n" res;
+//!   flush stdout;
+//!   send_two deadbeef string;
+//!   send_two (f deadbeef) string
+//! ```
+//!
+
 
 pub mod mlvalues;
 pub mod memory;
