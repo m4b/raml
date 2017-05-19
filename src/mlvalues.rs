@@ -4,7 +4,7 @@ pub type Uintnat = usize;
 #[allow(non_camel_case_types)]
 pub type Mlsize_t = Uintnat;
 #[allow(non_camel_case_types)]
-pub type Tag_t = u8; //typedef unsigned int tag_t; // Actually, an unsigned char <- wut
+pub type Tag_t = u8; //typedef unsigned int tag_t; // Actually, an unsigned char
 #[allow(non_camel_case_types)]
 pub type Color_t = Uintnat;
 #[allow(non_camel_case_types)]
@@ -13,18 +13,22 @@ pub type Mark_t = Uintnat;
 /** Structure of the header:
 
 For 16-bit and 32-bit architectures:
+
+```text
      +--------+-------+-----+
      | wosize | color | tag |
      +--------+-------+-----+
 bits  31    10 9     8 7   0
+```
 
 For 64-bit architectures:
 
+```text
      +--------+-------+-----+
      | wosize | color | tag |
      +--------+-------+-----+
 bits  63    10 9     8 7   0
-
+```
 */
 pub struct Header {
     

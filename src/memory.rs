@@ -1,4 +1,4 @@
-/** ## CAMLParam Macros
+/** ## `CAMLParam` Macros
    The following macros are used to declare C local variables and
    function parameters of type [value].
 
