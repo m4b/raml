@@ -6,7 +6,7 @@ Direct OCaml bindings without ever leaving Rust - no C stubs!
 
 (you still have to know how the C ffi bindings work; if you do, the macros are almost identical to the C ones in their naming and purpose)
 
-Please see the example in `examples` for the `client` code (Rust code that OCaml code will call) and the `ocaml` directory for the OCaml code that calls the Rust code.
+Please see the example in `examples` for the Rust code in `rust` for the Rust code that OCaml code will call and the `ocaml` directory for the OCaml code that calls the Rust code.
 
 Also, please bear with me as I'm trying to add more documentation and examples, but I am very busy; if you see something, don't hesitate to add a PR or issue, thanks :)
 

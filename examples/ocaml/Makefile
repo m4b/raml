@@ -1,24 +1,24 @@
 ## example makefile for building ocaml binary with rust lib
 ## NB: assumes you use rustup with standard install
 
-RUSTSRC=$(wildcard ../client/src/*.rs)
-CLIENT=../client/target/debug/libclient.a
+RUSTSRC=$(wildcard ../rust/src/*.rs)
+CLIENT=../rust/target/debug/libclient.a
 ARGS=-- -Z unstable-options --pretty=expanded
 
 build: test $(CLIENT)
 
 $(CLIENT): $(RUSTSRC)
-	cd ../client && cargo build
+	cd ../rust && cargo build
 
 test: test.ml $(CLIENT)
-	ocamlopt.opt -verbose -cclib -lclient -ccopt -L../client/target/debug -ccopt '-L ~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib/' -cclib -ldl -cclib -lpthread   test.ml -o test
+	ocamlopt.opt -verbose -cclib -lclient -ccopt -L../rust/target/debug -ccopt '-L ~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib/' -cclib -ldl -cclib -lpthread   test.ml -o test
 
 pretty: test
-	cd ../client && cargo rustc $(ARGS)
+	cd ../rust && cargo rustc $(ARGS)
 
 clean:
 	rm test *.o *.cm*
 	rm -rf _build
-	cd ../client && cargo clean
+	cd ../rust && cargo clean
 
 .PHONY: build clean pretty

@@ -9,3 +9,4 @@ _build
 *.cmx
 *.cmi
 *#*
+examples/ocaml/test
