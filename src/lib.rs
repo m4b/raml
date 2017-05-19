@@ -6,9 +6,12 @@
 //!
 //! The benefit of this approach is that it removes any bridging C code, and allows in essence, a direct interface between Rust and OCaml.
 //!
-//! ```rust
-//! // these are two functions that OCaml code can access via `external val` declarations
+//! The macro has the format: `(name, |params...|, <local variables..>, { // code body }, -> optional return value listed in local variables`)
 //!
+//! ```rust
+//! #[macro_use] extern crate raml;
+//!
+//! // these are two functions that OCaml code can access via `external val` declarations
 //! caml!(ml_send_int, |v, v2|, <l>, {
 //!     let x = int_val!(v);
 //!     l = val_int!(0xbeef);
@@ -25,6 +28,9 @@
 //!     let string = ::std::str::from_utf8_unchecked(slice);
 //!     println!("got  0x{:x}, {}", x, string);
 //! });
+//!
+//! // this is only here to satisfy docs
+//! fn main() {}
 //! ```
 
 pub mod mlvalues;
