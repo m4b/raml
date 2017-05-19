@@ -8,6 +8,28 @@
 //!
 //! The macro has the format: `(name, |params...|, <local variables..>, { // code body }, -> optional return value listed in local variables`)
 //!
+//! A basic example demonstrates their usage:
+//!
+//! ```rust
+//! #[macro_use] extern crate raml;
+//!
+//! caml!(ml_beef, |parameter|, <local>, {
+//!     let i = int_val!(parameter);
+//!     let res = 0xbeef * i;
+//!     println!("about to return  0x{:x} to OCaml runtime", res);
+//!     local = val_int!(res);
+//! } -> local);
+//!
+//! // this is only here to satisfy docs
+//! fn main() {}
+//! ```
+//!
+//! The macro takes care of _automatically_ declaring `CAMLparam` et. al, as well as `CAMLlocal` and `CAMLreturn`.
+//!
+//! If you need more fine grained control, `caml_body!` and others are available.
+//!
+//! Some more examples:
+//!
 //! ```rust
 //! #[macro_use] extern crate raml;
 //!
